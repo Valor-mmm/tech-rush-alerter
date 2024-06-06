@@ -1,11 +1,31 @@
 import { fetchPage } from "./fetchPage.ts";
-import { parseTechRush } from "./parseTechRush.ts";
+import { parseTechRush, TechRushTestProduct } from "./parseTechRush.ts";
+import { getPreviousResult, saveResult } from "./history.ts";
+import { getNewEntries } from "./techRushDiff.ts";
+
+type TechRushParseResult = {
+  testProducts: TechRushTestProduct[];
+};
 
 const main = async (): Promise<void> => {
   const pageText = await fetchPage(
     "https://techrush.de/category/produkttests/",
   );
-  parseTechRush(pageText);
+
+  const techRushResult = parseTechRush(pageText);
+  const previousResult = await getPreviousResult<TechRushParseResult>(
+    "techRushTestProducts",
+  );
+
+  const newEntries = previousResult?.testProducts
+    ? getNewEntries(previousResult.testProducts, techRushResult)
+    : techRushResult;
+
+  console.log("diffs", newEntries);
+
+  await saveResult<TechRushParseResult>("techRushTestProducts", {
+    testProducts: techRushResult,
+  });
 };
 
 // Learn more at https://deno.land/manual/examples/module_metadata#concepts
