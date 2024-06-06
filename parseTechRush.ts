@@ -1,5 +1,14 @@
 import { DOMParser, Element, Node } from "jsr:@b-fuze/deno-dom";
 
+// https://regex101.com/r/iBRWqe/
+const titleRegex = /^.*?:\s?(?<product>.+)$/
+
+const parseTitle = (title: string): string => {
+    const match = titleRegex.exec(title);
+
+    return match?.groups?.product ?? title
+}
+
 export const parseTechRush = (techRushHTML: string) => {
     const doc = new DOMParser().parseFromString(techRushHTML, 'text/html')
 
@@ -23,7 +32,7 @@ export const parseTechRush = (techRushHTML: string) => {
         const href = link.getAttribute('href')
 
         return [{
-            title,
+            title: parseTitle(title),
             href
         }]
     })
