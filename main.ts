@@ -2,6 +2,7 @@ import { fetchPage } from "./fetchPage.ts";
 import { parseTechRush, TechRushTestProduct } from "./parseTechRush.ts";
 import { getPreviousResult, saveResult } from "./history.ts";
 import { getNewEntries } from "./techRushDiff.ts";
+import { sendTechRushAlert } from "./alert.ts";
 
 type TechRushParseResult = {
   testProducts: TechRushTestProduct[];
@@ -21,7 +22,7 @@ const main = async (): Promise<void> => {
     ? getNewEntries(previousResult.testProducts, techRushResult)
     : techRushResult;
 
-  console.log("diffs", newEntries);
+  await sendTechRushAlert(newEntries);
 
   await saveResult<TechRushParseResult>("techRushTestProducts", {
     testProducts: techRushResult,
