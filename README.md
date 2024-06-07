@@ -9,5 +9,5 @@ Install deno and run the following command int the root directory of the
 project.
 
 ```bash
-deno run -A main.ts
+deno run --allow-net --allow-read --allow-env main.ts
 ```
