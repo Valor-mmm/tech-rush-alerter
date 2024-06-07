@@ -1,6 +1,6 @@
 import sendGrid from "@sendgrid/mail";
 import { TechRushTestProduct } from "./parseTechRush.ts";
-import {getEnvValue} from "./envHandler.ts";
+import { getEnvValue } from "./envHandler.ts";
 
 export const sendTechRushAlert = async (
   newProducts: TechRushTestProduct[],
@@ -9,7 +9,7 @@ export const sendTechRushAlert = async (
     return;
   }
 
-  const templateId = await getEnvValue("TECH_RUSH_MAIL_TEMPLATE")
+  const templateId = await getEnvValue("TECH_RUSH_MAIL_TEMPLATE");
   const apiKey = await getEnvValue("TECH_RUSH_MAIL_API_KEY");
   const mailSender = await getEnvValue("TECH_RUSH_MAIL_SENDER");
   const mailReceiver = await getEnvValue("TECH_RUSH_MAIL_RECEIVER");
