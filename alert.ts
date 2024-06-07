@@ -1,6 +1,6 @@
 import sendGrid from "@sendgrid/mail";
-import { load } from "@std/dotenv";
 import { TechRushTestProduct } from "./parseTechRush.ts";
+import {getEnvValue} from "./envHandler.ts";
 
 export const sendTechRushAlert = async (
   newProducts: TechRushTestProduct[],
@@ -9,12 +9,10 @@ export const sendTechRushAlert = async (
     return;
   }
 
-  const env = await load();
-
-  const templateId = env.TECH_RUSH_MAIL_TEMPLATE;
-  const apiKey = env.TECH_RUSH_MAIL_API_KEY;
-  const mailSender = env.TECH_RUSH_MAIL_SENDER;
-  const mailReceiver = env.TECH_RUSH_MAIL_RECEIVER;
+  const templateId = await getEnvValue("TECH_RUSH_MAIL_TEMPLATE")
+  const apiKey = await getEnvValue("TECH_RUSH_MAIL_API_KEY");
+  const mailSender = await getEnvValue("TECH_RUSH_MAIL_SENDER");
+  const mailReceiver = await getEnvValue("TECH_RUSH_MAIL_RECEIVER");
 
   sendGrid.setApiKey(apiKey);
 
