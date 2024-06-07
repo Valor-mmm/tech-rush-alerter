@@ -31,5 +31,8 @@ const main = async (): Promise<void> => {
 
 // Learn more at https://deno.land/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  await main();
+  await Deno.cron("Check for new products", { hour: { every: 5 } }, async () => {
+    console.log("Checking for new products ", new Date().toISOString())
+    await main()
+  });
 }
