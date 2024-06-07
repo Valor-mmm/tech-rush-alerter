@@ -17,5 +17,11 @@ export const getEnvValue = async (key: EnvKeys): Promise<string> => {
     "Did not find env variable in Deno.env; Trying to get .env file variables",
   );
   const env = await load();
+  const value = env[key];
+
+  if (!value) {
+    throw new Error(`Could not find env variable with key "${key}"`);
+  }
+
   return env[key];
 };
