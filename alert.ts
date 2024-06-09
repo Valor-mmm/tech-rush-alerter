@@ -6,6 +6,7 @@ export const sendTechRushAlert = async (
   newProducts: TechRushTestProduct[],
 ): Promise<void> => {
   if (newProducts.length === 0) {
+    console.log("No new Entries found. No alert necessary.")
     return;
   }
 
