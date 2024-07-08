@@ -33,7 +33,7 @@ const main = async (): Promise<void> => {
 if (import.meta.main) {
   await Deno.cron(
     "Check for new products",
-    { hour: { every: 5 } },
+    { hour: { every: 24 } },
     async () => {
       console.log("Checking for new products ", new Date().toISOString());
       await main();
